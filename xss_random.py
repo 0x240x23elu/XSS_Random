@@ -29,25 +29,36 @@ def test_url(url, payload):
 
 # Function to test URL with various payloads and encodings
 def detect_xss(url, payloads):
+    results = []
     for payload in payloads:
         # Test the original payload
         if test_url(url, payload):
-            print(f"{Fore.RED}Vulnerable to XSS: {url} with payload: {Fore.GREEN} {payload}{Style.RESET_ALL}")
+            result = f"Vulnerable to XSS: {url} with payload: {Fore.GREEN} {payload}"
+            print(f"{Fore.RED}{result}{Style.RESET_ALL}")
+            results.append(result)
         
         # Test URL-encoded payload
         url_encoded_payload = urllib.parse.quote(payload)
         if test_url(url, url_encoded_payload):
-            print(f"{Fore.RED}Vulnerable to XSS (URL-encoded): {url} with payload: {Fore.GREEN} {url_encoded_payload}{Style.RESET_ALL}")
+            result = f"Vulnerable to XSS (URL-encoded): {url} with payload: {Fore.GREEN} {url_encoded_payload}"
+            print(f"{Fore.RED}{result}{Style.RESET_ALL}")
+            results.append(result)
 
         # Test base64-encoded payload
         base64_payload = base64.b64encode(payload.encode()).decode()
         if test_url(url, base64_payload):
-            print(f"{Fore.RED}Vulnerable to XSS (Base64-encoded): {url} with payload: {Fore.GREEN} {base64_payload}{Style.RESET_ALL}")
+            result = f"Vulnerable to XSS (Base64-encoded): {url} with payload: {Fore.GREEN} {base64_payload}"
+            print(f"{Fore.RED}{result}{Style.RESET_ALL}")
+            results.append(result)
 
         # Test random case payload
         random_case_payload = random_case(payload)
         if test_url(url, random_case_payload):
-            print(f"{Fore.RED}Vulnerable to XSS (Random Case): {url} with payload:  {Fore.GREEN}{random_case_payload}{Style.RESET_ALL}")
+            result = f"Vulnerable to XSS (Random Case): {url} with payload: {Fore.GREEN} {random_case_payload}"
+            print(f"{Fore.RED}{result}{Style.RESET_ALL}")
+            results.append(result)
+    
+    return results
 
 # Read payloads from a file
 def read_payloads_from_file(file_path):
@@ -72,7 +83,8 @@ def read_targets_from_file(file_path):
 # Function to test URLs concurrently with multiprocessing
 def test_urls_concurrently(targets, payloads, num_processes):
     with multiprocessing.Pool(processes=num_processes) as pool:
-        pool.starmap(detect_xss, [(target, payloads) for target in targets])
+        results = pool.starmap(detect_xss, [(target, payloads) for target in targets])
+    return [item for sublist in results for item in sublist]
 
 # Example usage
 if __name__ == "__main__":
@@ -84,4 +96,12 @@ if __name__ == "__main__":
     payloads = read_payloads_from_file(payload_file_path)
 
     print(f"{Fore.GREEN}Testing target URLs for XSS vulnerabilities using {num_processes} processes:{Style.RESET_ALL}")
-    test_urls_concurrently(targets, payloads, num_processes)
+    results = test_urls_concurrently(targets, payloads, num_processes)
+
+    # Save the results to the output file
+    output_file = "output.txt"  # Specify the output file name here
+    with open(output_file, 'w') as file:
+        for result in results:
+            file.write(result + '\n')
+
+    print(f"Results saved to {output_file}")
