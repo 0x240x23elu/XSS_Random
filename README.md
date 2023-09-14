@@ -13,7 +13,7 @@ The Python code provided is a script for testing web URLs for Cross-Site Scripti
 How to use :
 
 <pre>
-root@xxx:~/XSS_Random# python xss_random4.py
+root@xxx:~/XSS_Random# python xss_random.py
 Enter the path to the target URL file: target.txt
 Enter the path to the payload file: xss-all-list.txt
 Enter the number of processes to use: 10
