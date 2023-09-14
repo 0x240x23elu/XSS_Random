@@ -4,6 +4,10 @@ import base64
 import random
 import string
 import multiprocessing
+from colorama import Fore, Style, init
+
+# Initialize colorama
+init(autoreset=True)
 
 # Function to generate random upper and lower case variations of a string
 def random_case(string):
@@ -28,22 +32,22 @@ def detect_xss(url, payloads):
     for payload in payloads:
         # Test the original payload
         if test_url(url, payload):
-            print(f"Vulnerable to XSS: {url} with payload: {payload}")
+            print(f"{Fore.RED}Vulnerable to XSS: {url} with payload: {Fore.GREEN} {payload}{Style.RESET_ALL}")
         
         # Test URL-encoded payload
         url_encoded_payload = urllib.parse.quote(payload)
         if test_url(url, url_encoded_payload):
-            print(f"Vulnerable to XSS (URL-encoded): {url} with payload: {url_encoded_payload}")
+            print(f"{Fore.RED}Vulnerable to XSS (URL-encoded): {url} with payload: {Fore.GREEN} {url_encoded_payload}{Style.RESET_ALL}")
 
         # Test base64-encoded payload
         base64_payload = base64.b64encode(payload.encode()).decode()
         if test_url(url, base64_payload):
-            print(f"Vulnerable to XSS (Base64-encoded): {url} with payload: {base64_payload}")
+            print(f"{Fore.RED}Vulnerable to XSS (Base64-encoded): {url} with payload: {Fore.GREEN} {base64_payload}{Style.RESET_ALL}")
 
         # Test random case payload
         random_case_payload = random_case(payload)
         if test_url(url, random_case_payload):
-            print(f"Vulnerable to XSS (Random Case): {url} with payload: {random_case_payload}")
+            print(f"{Fore.RED}Vulnerable to XSS (Random Case): {url} with payload:  {Fore.GREEN}{random_case_payload}{Style.RESET_ALL}")
 
 # Read payloads from a file
 def read_payloads_from_file(file_path):
@@ -79,5 +83,5 @@ if __name__ == "__main__":
     targets = read_targets_from_file(target_file_path)
     payloads = read_payloads_from_file(payload_file_path)
 
-    print(f"Testing target URLs for XSS vulnerabilities using {num_processes} processes:")
+    print(f"{Fore.GREEN}Testing target URLs for XSS vulnerabilities using {num_processes} processes:{Style.RESET_ALL}")
     test_urls_concurrently(targets, payloads, num_processes)
