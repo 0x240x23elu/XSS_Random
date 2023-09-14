@@ -21,3 +21,9 @@ Enter the number of processes to use: 10
 
 
 ![](https://raw.githubusercontent.com/0x240x23elu/XSS_Random/main/xss_random.JPG)
+
+
+
+<pre>📝 Note: I are not responsible for any misuse or unintended consequences resulting from the use of this code. Users are encouraged to exercise caution, conduct due diligence, and adhere to legal and ethical standards when utilizing this project.
+
+Let's build a positive and responsible coding community together! If you have any questions or concerns, please don't hesitate to reach out. Happy coding! 🌟"</pre>
